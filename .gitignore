@@ -5,6 +5,9 @@ build
 tbuild
 doc/openapi/openapi.json
 doc/erd/ERD.md
+
+src/**/generated
+
 # Logs
 logs
 *.log

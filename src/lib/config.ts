@@ -10,6 +10,8 @@ export interface IConfig {
 
     PORT: number | `${number}`;
 
+    DATABASE_URL: string;
+
     INTERNAL_EVENT_SYS_HOST: string;
     INTERNAL_EVENT_SYS_PORT: number | `${number}`;
 }

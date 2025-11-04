@@ -4,7 +4,7 @@ import { ILogger } from "@lib/logger";
 import { MilliSec } from "@lib/util/time";
 import { OmitKeyof } from "@lib/util/type";
 import { DynamicModule } from "@nestia/core";
-import { INestApplication, NestApplicationOptions } from "@nestjs/common";
+import { INestApplication, NestApplicationOptions, Type } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import cookieParser from "cookie-parser";
@@ -25,7 +25,7 @@ export const bootstrap = async ({
     use = async () => {},
 }: {
     name: string;
-    module: unknown;
+    module: Type<unknown>;
     options?: OmitKeyof<NestApplicationOptions, "logger" | "bufferLogs" | "autoFlushLogs">;
     use?: (app: INestApplication) => Promise<void>;
 }) => {

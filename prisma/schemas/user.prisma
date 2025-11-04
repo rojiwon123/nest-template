@@ -1,0 +1,12 @@
+/// 회원 정보
+///
+/// @namespace User
+/// @namespace All
+model students {
+    id        String    @id @database.Uuid
+    /// 회원명
+    name      String
+    createdAt DateTime  @map("created_at") @database.Timestamptz(6)
+    updatedAt DateTime  @map("updated_at") @database.Timestamptz(6)
+    deletedAt DateTime? @map("deleted_at") @database.Timestamptz(6)
+}

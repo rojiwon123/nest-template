@@ -3,6 +3,7 @@ FROM  node:20-bookworm AS builder
 WORKDIR /usr/src/app
 
 COPY  package*.json tsconfig*.json ./
+COPY  ./prisma/schemas ./prisma/schemas
 RUN npm i -g npm && npm ci
 
 COPY . .

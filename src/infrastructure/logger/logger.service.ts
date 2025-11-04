@@ -1,19 +1,18 @@
 import winston from "winston";
 
-import { ConfigToken } from "@config/config.factory";
-import { Config } from "@config/config.type";
-import { Inject, Injectable, LoggerService } from "@nestjs/common";
-import { LogLevel } from "./log-level.type";
-import { LOCAL_TRANSPORTS } from "./transport/local.transports";
+import { IConfig } from "@lib/config";
+import { ILogger, LogLevel } from "@lib/logger";
+import { Inject, Injectable } from "@nestjs/common";
+import { LOCAL_TRANSPORT } from "./transport/local.transport";
 
 @Injectable()
-export class Logger implements LoggerService {
+export class Logger implements ILogger {
     private readonly logger: winston.Logger;
-    constructor(@Inject(ConfigToken) config: Config) {
+    constructor(@Inject(IConfig.Token) config: IConfig) {
         this.logger = winston.createLogger({
             levels: { FATAL: 0, ERROR: 1, WARN: 2, INFO: 3 } satisfies Record<LogLevel, number>,
             level: config.LOG_LEVEL,
-            transports: LOCAL_TRANSPORTS,
+            transports: [LOCAL_TRANSPORT],
         });
     }
 
@@ -49,7 +48,7 @@ export class Logger implements LoggerService {
         this.info(...msg);
     }
 
-    debus(...msg: unknown[]) {
+    debug(...msg: unknown[]) {
         this.info(...msg);
     }
 }

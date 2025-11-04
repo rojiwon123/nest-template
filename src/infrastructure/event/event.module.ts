@@ -1,31 +1,33 @@
-import { MilliSec } from "@/common/util/time";
-import { ConfigToken } from "@config/config.factory";
-import { Config } from "@config/config.type";
+import { IConfig } from "@lib/config";
+import { IEventService } from "@lib/event";
+import { MilliSec } from "@lib/util/time";
 import { Global, Module } from "@nestjs/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { EventService } from "./event.service";
-import { WorkerToken } from "./event.token";
+import { InternalEventToken } from "./event.token";
 
 @Global()
 @Module({
     imports: [
         ClientsModule.registerAsync([
             {
-                name: WorkerToken,
-                inject: [ConfigToken],
-                useFactory: async ({ WORKER_HOST, WORKER_PORT }: Config) => ({
-                    transport: Transport.REDIS,
-                    options: {
-                        host: WORKER_HOST,
-                        port: Number(WORKER_PORT),
-                        retryAttempts: Infinity,
-                        retryDelay: MilliSec.ONE_SEC * 5,
-                    },
-                }),
+                name: InternalEventToken,
+                inject: [IConfig.Token],
+                async useFactory(config: IConfig) {
+                    return {
+                        transport: Transport.REDIS,
+                        options: {
+                            host: config.INTERNAL_EVENT_SYS_HOST,
+                            port: Number(config.INTERNAL_EVENT_SYS_PORT),
+                            retryAttempts: Infinity,
+                            retryDelay: MilliSec.ONE_SEC * 5,
+                        },
+                    };
+                },
             },
         ]),
     ],
-    providers: [EventService],
-    exports: [EventService],
+    providers: [{ provide: IEventService.Token, useClass: EventService }],
+    exports: [IEventService.Token],
 })
 export class EventModule {}

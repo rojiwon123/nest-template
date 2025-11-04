@@ -1,22 +1,21 @@
-import { WorkerEvent } from "@event/event.type";
+import { IEventService, InternalEvent } from "@lib/event";
 import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { lastValueFrom } from "rxjs";
-import { WorkerToken } from "./event.token";
+import { InternalEventToken } from "./event.token";
 
 @Injectable()
-export class EventService implements OnModuleInit, OnModuleDestroy {
-    constructor(@Inject(WorkerToken) private readonly workerClient: ClientProxy) {}
+export class EventService implements IEventService, OnModuleInit, OnModuleDestroy {
+    constructor(@Inject(InternalEventToken) private readonly internalEventClient: ClientProxy) {}
 
     async onModuleInit() {
-        await this.workerClient.connect();
+        await this.internalEventClient.connect();
     }
-
     async onModuleDestroy() {
-        await this.workerClient.close();
+        await this.internalEventClient.close();
     }
 
-    async emitWorker(input: WorkerEvent) {
-        await lastValueFrom(this.workerClient.emit(input.name, input.payload));
+    async emitInternalEvent<E extends InternalEvent.EventGroup>(name: E["name"], payload: E["payload"]): Promise<void> {
+        await lastValueFrom(this.internalEventClient.emit(name, payload));
     }
 }

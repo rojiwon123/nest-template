@@ -3,6 +3,6 @@ dist
 build
 tbuild
 
-lib
+!src
 
 .dockerignore

@@ -12,8 +12,8 @@
         // "noImplicitThis": true, // strict mode family
         "noPropertyAccessFromIndexSignature": true,
         "noUncheckedIndexedAccess": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
         "strict": true,
         // "strictBindCallApply": true, // strict mode family
         // "strictFunctionTypes": true, // strict mode family
@@ -32,10 +32,8 @@
         // "moduleSuffix": [],
         // "noResolve": false,
         "paths": {
-            "@event/*": ["./src/infrastructure/event/*"],
-            "@logger/*": ["./src/infrastructure/logger/*"],
-            "@db/*": ["./src/infrastructure/db/*"],
-            "@config/*": ["./src/infrastructure/config/*"],
+            "@app/*": ["./src/app/*"],
+            "@lib/*": ["./src/lib/*"],
             "@/*": ["./src/*"]
         },
         "resolveJsonModule": true,

@@ -1,9 +1,11 @@
 import { InfraModule } from "@/infrastructure/infra.module";
-import { Module } from "@nestjs/common";
-import { AuthModule } from "./auth/auth.module";
-import { UserModule } from "./user/user.module";
+import { Module, Provider } from "@nestjs/common";
 
-const modules = [InfraModule, AuthModule, UserModule];
+const modules: Provider[] = [];
 
-@Module({ imports: modules, exports: modules })
+@Module({
+    imports: [InfraModule],
+    providers: modules,
+    exports: modules,
+})
 export class AppModule {}

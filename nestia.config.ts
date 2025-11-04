@@ -3,7 +3,7 @@ import type { INestiaConfig } from "@nestia/sdk";
 const NESTIA_CONFIG: INestiaConfig = {
     input: "src/controller",
     swagger: {
-        openapi: "3.1",
+        openapi: "3.0",
         output: "doc/openapi/openapi.json",
         decompose: true,
         security: { bearer: { type: "http", scheme: "bearer" } },

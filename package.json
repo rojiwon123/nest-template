@@ -34,7 +34,7 @@
         "express": "^5.1.0",
         "fp-ts": "^2.16.11",
         "helmet": "^8.1.0",
-        "ioredis": "^5.7.0",
+        "ioredis": "^5.8.2",
         "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.14.5",
         "reflect-metadata": "^0.2.2",

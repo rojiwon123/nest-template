@@ -1,4 +1,4 @@
-import { LogLevel } from "@logger/log-level.type";
+import { LogLevel } from "@lib/logger";
 import { isString } from "fp-ts/lib/string";
 import util from "util";
 import winston from "winston";
@@ -40,23 +40,19 @@ const stringifyLogFormat = ({ colors = false }: { colors?: boolean } = {}) =>
         return info;
     })();
 
-export const LOCAL_TRANSPORTS = [
-    new winston.transports.Stream({
-        stream: process.stdout,
-        format: winston.format.combine(
-            stringifyLogFormat({ colors: true }),
-            winston.format.colorize({
-                level: true,
-                colors: {
-                    INFO: "green",
-                    WARN: "yellow",
-                    ERROR: "blue",
-                    FATAL: "red",
-                } satisfies Record<LogLevel, "red" | "blue" | "yellow" | "green" | "gray" | "white">,
-            }),
-            winston.format.printf(
-                (info) => `[${info.level}] ${new Date().toLocaleString("ko", { timeZone: "Asia/Seoul" })} ${info.message}`,
-            ),
-        ),
-    }),
-];
+export const LOCAL_TRANSPORT = new winston.transports.Stream({
+    stream: process.stdout,
+    format: winston.format.combine(
+        stringifyLogFormat({ colors: true }),
+        winston.format.colorize({
+            level: true,
+            colors: {
+                INFO: "green",
+                WARN: "yellow",
+                ERROR: "blue",
+                FATAL: "red",
+            } satisfies Record<LogLevel, "red" | "blue" | "yellow" | "green" | "gray" | "white">,
+        }),
+        winston.format.printf((info) => `[${info.level}] ${new Date().toLocaleString("ko", { timeZone: "Asia/Seoul" })} ${info.message}`),
+    ),
+});

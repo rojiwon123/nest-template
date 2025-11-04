@@ -1,6 +1,8 @@
+import { IsPublic } from "@lib/decorator/is-public.decorator";
 import core from "@nestia/core";
 import { Controller } from "@nestjs/common";
 
+@IsPublic()
 @Controller("sys")
 export class SysController {
     /**

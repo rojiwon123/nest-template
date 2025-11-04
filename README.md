@@ -18,7 +18,7 @@ nestjs 프로젝트를 빠르게 시작하기 위한 간단한 템플릿 환경�
 ```ts
 import { Controller, Get, Param } from "@nestjs/common";
 
-import { Article } from "@/app/article/article.dto";
+import { Article } from "@app/article/article.dto";
 
 @Controller("articles")
 export class ArticlesController {
